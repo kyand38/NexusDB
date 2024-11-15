@@ -6,7 +6,8 @@ import {
     createAthought,
     updateAThoughtById,
     deleteAThoughtById,
-    addAReaction
+    addAReaction,
+    deleteAReaction
 } from '../../controllers/thoughtController.js';
 
 // Define routes for thoughts
@@ -23,6 +24,6 @@ router.route('/thoughtId/reactions')
     .post(addAReaction)
 
 router.route('/thoughtId/reactions/reactionId')
-
+ .delete(deleteAReaction)
 // Export the router
 export default router;
