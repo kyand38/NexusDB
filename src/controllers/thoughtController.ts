@@ -77,3 +77,41 @@ export const deleteAThoughtById = async (req: Request, res: Response) => {
     }
 }
 
+export const addAReaction = async (req: Request, res: Response) => {
+    try {
+        const thought = await Thought.findByIdAndUpdate(
+            req.params.thoughtId,
+            { $push: { reactions: req.body } },
+            { new: true },
+        )
+
+        if (!thought) {
+            return res.status(404).json({ message: 'Thought not found' });
+        }
+
+        return res.json({ message: 'Reaction added successfully' })
+    } catch (err) {
+        return res.status(500).json({ message: 'Error addiing reaction', err })
+    }
+}
+
+
+export const deleteAReaction = async (req: Request, res: Response) => {
+    try {
+        const thought = await Thought.findByIdAndUpdate(
+            req.params.thoughtId,
+            { 
+                $pull: { reactions: { reactionId: req.params.reactionId } } 
+            },
+            { new: true },
+        )
+            
+            if (!thought) {
+                return res.status(404).json({ message: 'Thought not found' });
+            }
+            
+            return res.json({ message: 'Reaction deleted successfully' })
+        } catch (err) {
+            return res.status(500).json({ message: 'Error deleting reaction', err })
+        }
+}

@@ -14,11 +14,16 @@ export const getAllUsers = async (_req: Request, res: Response) => {
 
 export const getAUserById = async (req: Request, res: Response) => {
     try {
+        console.log('Received ID:', req.params.userId); // Log the received ID
 
         const user = await User.findOne({ _id: req.params.userId })
             .select('-__v')
             .populate('friends')
             .populate('thoughts')
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
 
         return res.json(user)
     } catch (err) {
@@ -48,7 +53,7 @@ export const updateAUserById = async (req: Request, res: Response) => {
         const updatedUser = await User.findByIdAndUpdate(
             req.params.userId,
             { $set: req.body },
-            { new: true }// This option returns the updated document
+            { new: true }// This {option} returns the updated document
         );
 
         if (!updatedUser) {
@@ -64,13 +69,52 @@ export const updateAUserById = async (req: Request, res: Response) => {
 export const deleteAUserById = async (req: Request, res: Response) => {
     try {
 
-        const deleteUser =await User.findByIdAndDelete({_id: req.params.userId})
+        const deleteUser = await User.findByIdAndDelete({ _id: req.params.userId })
 
         if (!deleteUser) {
             return res.status(404).json({ message: 'User ID not found' });
         }
-        return res.json({message: 'User deleted successfully'})
-    }catch (err) {
+        return res.json({ message: 'User deleted successfully' })
+    } catch (err) {
         return res.status(500).json({ message: 'Error deleting user', error: err });
     }
+}
+
+export const addAFriendById = async (req: Request, res: Response) => {
+    try {
+        const user = await User.findByIdAndUpdate(
+            req.params.userId,
+            {$push: { friends: req.params.friendId }},
+            {new: true},
+        );
+
+        if(!user) {
+            return res.status(404).json({message: 'User ID not found'})
+        }
+
+        return res.json({message: 'Friend added successfully'})
+
+    } catch (err) {
+        return res.status(500).json({ message: 'Error adding friend', error: err });
+    }
+}
+
+export const removeAFriend = async (req: Request, res: Response) => {
+    try {
+        const user = await User.findByIdAndUpdate(
+            req.params.thoughtId,
+            { 
+                $pull: { friends: req.params.friendId } 
+            },
+            { new: true },
+        )
+            
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            
+            return res.json({ message: 'Friend removed successfully' })
+        } catch (err) {
+            return res.status(500).json({ message: 'Error removing friend', err })
+        }
 }

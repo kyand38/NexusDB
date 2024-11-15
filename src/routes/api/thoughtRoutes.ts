@@ -5,7 +5,8 @@ import {
     getAThoughtById,
     createAthought,
     updateAThoughtById,
-    deleteAThoughtById
+    deleteAThoughtById,
+    addAReaction
 } from '../../controllers/thoughtController.js';
 
 // Define routes for thoughts
@@ -17,6 +18,11 @@ router.route('/:thoughtId')
     .get(getAThoughtById)     // GET a thought by ID
     .put(updateAThoughtById)  // PUT to update a thought by ID
     .delete(deleteAThoughtById); // DELETE a thought by ID
+
+router.route('/thoughtId/reactions')
+    .post(addAReaction)
+
+router.route('/thoughtId/reactions/reactionId')
 
 // Export the router
 export default router;
