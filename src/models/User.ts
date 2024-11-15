@@ -32,15 +32,6 @@ const UserSchema = new Schema<IUser>({
 // Define User as a model of IUser
 let User = model<IUser>('User', UserSchema);
 
-User
-    .create({// Create a new User document
-        username: 'testName', 
-        email: 'test@testmail.com',
-        friends: ['testId2', 'testId3'],
-        thoughts: ['thoughtId1', 'thoughtId2'],
-        friendCount: 2,
-    }).then(result => console.log('Created new User document', result))
-    .catch(err => console.error(err));
 
 
 // Export User as a model of IUser
