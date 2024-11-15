@@ -5,7 +5,7 @@ interface IThought extends Document {
   thoughtText: string;
   username: string;
   createdAt: Date;
-  reactions: string;
+  reactions: Response[];
 }
 
 // Define thoughtSchema as a new Schema with IThought as the type
@@ -25,9 +25,7 @@ const thoughtSchema = new Schema<IThought>(
       type: Date,
       default: Date.now,
     },
-    reactions: {
-      type: String,
-    },
+    reactions: [Response]
   },
     {
         toJSON: {

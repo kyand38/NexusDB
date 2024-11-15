@@ -4,7 +4,7 @@
       "target": "ES2020" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
   
       /* Modules */
-      "rootDir": "NexusDB/src" /* Specify the root folder within your source files. */,
+      "rootDir": "src" /* Specify the root folder within your source files. */,
   
       /* Emit */
       "outDir": "dist" /* Specify an output folder for all emitted files. */,
@@ -33,6 +33,6 @@
       "noImplicitOverride": true /* Ensure overriding members in derived classes are marked with an override modifier. */,
       "useUnknownInCatchVariables": true /* Ensure 'unknown' is used for catch clause variables. */
     },
-    "include": ["NexusDB/src"]
+    "include": ["src"]
   }
   
