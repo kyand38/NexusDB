@@ -6,7 +6,7 @@ import {
     createAthought,
     updateAThoughtById,
     deleteAThoughtById
-} from '../../controllers/thoughtController';
+} from '../../controllers/thoughtController.js';
 
 // Define routes for thoughts
 router.route('/')

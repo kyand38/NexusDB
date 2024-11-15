@@ -1,53 +1,62 @@
 import mongoose from 'mongoose';
-import db from '../config/connection';
-import User from '../models/User';
-import Thought from '../models/Thought';
+import db from '../config/connection.js';
+import User from '../models/User.js';
+import Thought from '../models/Thought.js';
 
 const seedData = async () => {
     try {
-        // Connect to the database if needed
         await db.once('open', () => console.log("Database connected for seeding"));
 
-        // Optional: Clear existing data
+        // Clear existing data
         await User.deleteMany({});
         await Thought.deleteMany({});
 
-        // Define sample users
-        const users = [
+        // Insert users
+        const [user1, user2, user3, user4] = await User.insertMany([
             { username: 'astro_adventurer', email: 'astro@galaxy.com' },
-            { username: 'code_wizard', email: 'wizard@magicmail.com' },
             { username: 'nova_knight', email: 'nova@starlight.com' },
-            { username: 'quantum_queen', email: 'queen@quantumrealm.com' },
             { username: 'zen_master', email: 'zen@peace.com' },
-        ];
+            { username: 'quantum_queen', email: 'queen@quantumrealm.com' }
+        ]);
 
-        // Define sample thoughts (quotes)
-        const thoughts = [
-            { thoughtText: '“The only way to achieve the impossible is to believe it is possible.”', username: 'astro_adventurer' },
-            { thoughtText: '“Any sufficiently advanced technology is indistinguishable from magic.”', username: 'code_wizard' },
-            { thoughtText: '“The stars don’t look bigger, but they do look brighter.”', username: 'nova_knight' },
-            { thoughtText: '“Reality is merely an illusion, albeit a very persistent one.”', username: 'quantum_queen' },
-            { thoughtText: '“Be the change you wish to see in the world.”', username: 'zen_master' },
-            { thoughtText: '“The journey of a thousand miles begins with a single step.”', username: 'zen_master' },
-            { thoughtText: '“Logic will get you from A to B. Imagination will take you everywhere.”', username: 'code_wizard' },
-            { thoughtText: '“Somewhere, something incredible is waiting to be known.”', username: 'astro_adventurer' },
-            { thoughtText: '“Look up at the stars and not down at your feet.”', username: 'nova_knight' },
-        ];
+        // Insert thoughts associated with these users
+        const thought1 = await Thought.create({
+            thoughtText: '“The only way to achieve the impossible is to believe it is possible.”',
+            username: user1.username
+        });
+        const thought2 = await Thought.create({
+            thoughtText: '“Look up at the stars and not down at your feet.”',
+            username: user2.username
+        });
+        const thought3 = await Thought.create({
+            thoughtText: '“Be the change you wish to see in the world.”',
+            username: user3.username
+        });
+        const thought4 = await Thought.create({
+            thoughtText: '“Reality is merely an illusion, albeit a very persistent one.”',
+            username: user4.username
+        });
 
-        // Insert users and thoughts
-        const createdUsers = await User.insertMany(users);
-        console.log('Users seeded:', createdUsers);
+        // Update users with friends and thoughts
+        await User.findByIdAndUpdate(user1._id, {
+            $push: { friends: [user2._id, user3._id], thoughts: thought1._id }
+        });
+        await User.findByIdAndUpdate(user2._id, {
+            $push: { friends: [user1._id, user4._id], thoughts: thought2._id }
+        });
+        await User.findByIdAndUpdate(user3._id, {
+            $push: { friends: [user1._id, user4._id], thoughts: thought3._id }
+        });
+        await User.findByIdAndUpdate(user4._id, {
+            $push: { friends: [user2._id, user3._id], thoughts: thought4._id }
+        });
 
-        const createdThoughts = await Thought.insertMany(thoughts);
-        console.log('Thoughts seeded:', createdThoughts);
-
+        console.log('Users and thoughts seeded successfully');
     } catch (err) {
         console.error('Error seeding data:', err);
     } finally {
-        // Close the database connection
         mongoose.connection.close();
     }
 };
 
-// Run the seeding function
 seedData();

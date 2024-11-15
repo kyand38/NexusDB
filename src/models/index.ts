@@ -1,6 +1,6 @@
-import User from './User';
-import Thought from './Thought';
-import Response from './Response';
+import User from './User.js';
+import Thought from './Thought.js';
+import Response from './Response.js';
 
 
 export { User, Response, Thought };

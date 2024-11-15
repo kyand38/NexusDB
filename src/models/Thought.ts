@@ -1,5 +1,5 @@
 import { Schema, model, Document, Types } from 'mongoose';
-import responseSchema from '../models/Response';
+import responseSchema from './Response.js';
 
 // Define IThought as an interface that extends Document
 interface IThought extends Document {

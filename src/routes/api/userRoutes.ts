@@ -6,7 +6,7 @@ import {
     createAUser,
     updateAUserById,
     deleteAUserById
-} from '../../controllers/userController';
+} from '../../controllers/userController.js';
 
 // /api/users
 router.route('/')
