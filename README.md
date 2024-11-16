@@ -62,7 +62,7 @@ NexusDB is a backend-only Node.js application designed to manage user-generated 
 
 
 ## API Endpoints
-
+[Demo](https://drive.google.com/file/d/1NjDfkC4U14FooNiiQlgint7pmIoMgj3S/view)
 ### Users
  - GET /api/users<br>
 Retrieve all users.
