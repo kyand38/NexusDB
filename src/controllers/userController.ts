@@ -102,7 +102,7 @@ export const addAFriendById = async (req: Request, res: Response) => {
 export const removeAFriend = async (req: Request, res: Response) => {
     try {
         const user = await User.findByIdAndUpdate(
-            req.params.thoughtId,
+            req.params.userId,
             { 
                 $pull: { friends: req.params.friendId } 
             },
@@ -118,3 +118,4 @@ export const removeAFriend = async (req: Request, res: Response) => {
             return res.status(500).json({ message: 'Error removing friend', err })
         }
 }
+

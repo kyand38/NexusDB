@@ -1,11 +1,11 @@
 import { Schema, model, Document, Types } from 'mongoose';
-import responseSchema from './Response.js';
+import responseSchema from './Reaction.js';
 
 // Define IThought as an interface that extends Document
 interface IThought extends Document {
   thoughtText: string;
   username: string;
-  createdAt: Date;
+  createdAt: String;
   reactions: Types.DocumentArray<any>;
 }
 
@@ -21,11 +21,13 @@ const thoughtSchema = new Schema<IThought>(
     username: {
       type: String,
       required: true,
+      trim: true,
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
+      createdAt: {
+        type: Date, // Ensure this is `Date` type
+        default: Date.now, // Use the current timestamp as the default
     },
+
     reactions: [responseSchema]
   },
   {

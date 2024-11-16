@@ -20,10 +20,10 @@ router.route('/:thoughtId')
     .put(updateAThoughtById)  // PUT to update a thought by ID
     .delete(deleteAThoughtById); // DELETE a thought by ID
 
-router.route('/thoughtId/reactions')
+router.route('/:thoughtId/reactions')
     .post(addAReaction)
 
-router.route('/thoughtId/reactions/reactionId')
+router.route('/:thoughtId/reactions/:reactionId')
  .delete(deleteAReaction)
 // Export the router
 export default router;

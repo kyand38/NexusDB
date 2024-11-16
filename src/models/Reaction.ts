@@ -1,21 +1,21 @@
 import { Schema, Document, ObjectId, Types } from 'mongoose';
 
 // Define IResponse as an interface that extends Document
-interface IResponse extends Document {
+interface IReaction extends Document {
   reactionId: ObjectId;
-  responseBody: string;
+  reactionBody: string;
   username: string;
   createdAt: Date;
 }
 
 // Define responseSchema as a new Schema with IResponse as the type
-const responseSchema = new Schema<IResponse>(
+const reactionSchema = new Schema<IReaction>(
   {
     reactionId: {
       type: Schema.Types.ObjectId,// Define reactionId as a new ObjectId
       default: () => new Types.ObjectId(),// Set default value to a new ObjectId
     },
-    responseBody: {
+    reactionBody: {
       type: String,
       required: true,
       maxlength: 280,
@@ -37,4 +37,4 @@ const responseSchema = new Schema<IResponse>(
   }
 );
 
-export default responseSchema;
+export default reactionSchema;
